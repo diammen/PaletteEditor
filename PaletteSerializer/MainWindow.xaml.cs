@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.ComponentModel;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -37,11 +38,32 @@ namespace PaletteSerializer
             public IList<Palette> palettes { get; set; }
         }
 
-        public class PaletteCollection
+        public class PaletteCollection : INotifyPropertyChanged
         {
             public string _comment { get; set; }
             [JsonProperty("palette-groups")]
-            public IList<PaletteGroup> paletteGroups { get; set; }
+            public IList<PaletteGroup> _paletteGroups;
+
+            public IList<PaletteGroup> PaletteGroups
+            {
+                get
+                {
+                    return _paletteGroups;
+                }
+                set
+                {
+                    _paletteGroups = value;
+                    NotifyPropertyChanged("PaletteGroups");
+                }
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            public void NotifyPropertyChanged(string name)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            }
+
         }
 
         PaletteCollection paletteFile = new PaletteCollection();
@@ -61,9 +83,9 @@ namespace PaletteSerializer
             {
                 currentFilePath = dlg.FileName;
 
-                paletteFile = JsonConvert.DeserializeObject<PaletteCollection>(dlg.FileName);
+                paletteFile = JsonConvert.DeserializeObject<PaletteCollection>(File.ReadAllText(dlg.FileName));
 
-                foreach (PaletteGroup entity in paletteFile.paletteGroups)
+                foreach (PaletteGroup entity in paletteFile.PaletteGroups)
                 {
                     EntityList.Items.Add(entity.name);
                 }
