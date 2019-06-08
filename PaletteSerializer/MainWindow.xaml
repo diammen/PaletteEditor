@@ -1,0 +1,21 @@
+﻿<Window x:Class="PaletteSerializer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PaletteSerializer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <DockPanel x:Name="MenuPanel" HorizontalAlignment="Left" Height="22" LastChildFill="False" VerticalAlignment="Top" Width="792">
+            <Menu DockPanel.Dock="Top" Height="23">
+                <MenuItem Header="File">
+                    <MenuItem x:Name="OpenFile" Header="_Open" Click="LoadFile_Click"/>
+                    <MenuItem x:Name="SaveFile" Header="_Save" Click="SaveFile_Click"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <ListBox x:Name="EntityList" HorizontalAlignment="Left" Height="382" Margin="10,27,0,0" VerticalAlignment="Top" Width="276"/>
+
+    </Grid>
+</Window>
