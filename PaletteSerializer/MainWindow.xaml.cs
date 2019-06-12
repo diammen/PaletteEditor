@@ -96,5 +96,21 @@ namespace PaletteSerializer
         {
 
         }
+
+        private void ListBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem item = ItemsControl.ContainerFromElement(sender as ListBox, e.OriginalSource as DependencyObject) as ListBoxItem;
+
+            if (item != null)
+            {
+                foreach (PaletteGroup entity in paletteFile.PaletteGroups)
+                {
+                    if (item.Content.ToString() == entity.name)
+                    {
+                        TestBlock.Text = item.Content.ToString();
+                    }
+                }
+            }
+        }
     }
 }

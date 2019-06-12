@@ -15,7 +15,11 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <ListBox x:Name="EntityList" HorizontalAlignment="Left" Height="382" Margin="10,27,0,0" VerticalAlignment="Top" Width="276"/>
+        <ListBox x:Name="EntityList" HorizontalAlignment="Left" Height="382" Margin="10,27,0,0" VerticalAlignment="Top" Width="276" PreviewMouseDown="ListBox_MouseLeftButtonDown">
+        </ListBox>
+        <StackPanel HorizontalAlignment="Left" Height="382" Margin="286,27,0,0" VerticalAlignment="Top" Width="496">
+            <TextBlock x:Name="TestBlock" TextWrapping="Wrap" Text="TextBlock"/>
 
+        </StackPanel>
     </Grid>
 </Window>
