@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -63,7 +64,6 @@ namespace PaletteSerializer
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             }
-
         }
 
         PaletteCollection paletteFile = new PaletteCollection();
@@ -107,7 +107,53 @@ namespace PaletteSerializer
                 {
                     if (item.Content.ToString() == entity.name)
                     {
-                        TestBlock.Text = item.Content.ToString();
+                        for (int i = 0; i < entity.palettes.Count; i++)
+                        {
+                            StackPanel newSP = new StackPanel() { Orientation = Orientation.Horizontal };
+
+                            if (PalettePanel.Children.Count <= i)
+                            {
+                                PalettePanel.Children.Add(newSP);
+
+                                newSP.Children.Add(new Rectangle());
+                                TextBlock textBox = new TextBlock();
+                                newSP.Children.Add(textBox);
+
+                                for (int k = 0; k < entity.palettes[i].colors.Count; k++)
+                                {
+                                    for (int j = 0; j < entity.palettes[i].colors[k].Count; j++)
+                                    {
+                                        textBox.Text += entity.palettes[i].colors[k][j].ToString() + " ";
+                                    }
+                                    textBox.Text += "\n";
+                                }
+                            }
+                            else
+                            {
+                                var temp = PalettePanel.Children[i] as StackPanel;
+
+                                var textBox = temp.Children[1] as TextBlock;
+
+                                textBox.Text = "";
+
+                                for (int k = 0; k < entity.palettes[i].colors.Count; k++)
+                                {
+                                    for (int j = 0; j < entity.palettes[i].colors[k].Count; j++)
+                                    {
+                                        textBox.Text += entity.palettes[i].colors[k][j].ToString() + " ";
+                                    }
+                                    textBox.Text += "\n";
+                                }
+                            }
+
+                            if (PalettePanel.Children.Count > entity.palettes.Count)
+                            {
+                                for (int k = entity.palettes.Count; k < PalettePanel.Children.Count; k++)
+                                {
+                                    PalettePanel.Children.RemoveAt(k);
+                                }
+                            }
+                        }
                     }
                 }
             }
